@@ -3,17 +3,12 @@ import java.util.regex.Pattern;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.regex.PatternSyntaxException;
-//import java.util.stream;
 
 import java.io.File;
-//import java.io.PrintFile;
 import java.io.FileNotFoundException;
 
 import java.nio.*;
-//import java.nio.file.Path;
-///import java.nio.file.Paths;
 import java.nio.file.*;
-// ch 11 pg 467, ch 19 pg 777, ch 21 pg 839
 
 public class Regex{
 
@@ -66,7 +61,7 @@ public class Regex{
 
 		/* 
 		 *	Below requests a reg ex from the user, validates it, and keeps
-		 *  requesting till a valid reg ex is given. A valid regex is stored
+		 *  	requesting till a valid reg ex is given. A valid regex is stored
 		 *	in userRegx.
 		 */
 		System.out.println("\nPlease enter the regular expression you'd like to use to search:\n");
@@ -75,7 +70,6 @@ public class Regex{
 		done = false;
 		while(!done){
 			try{
-				//pattern = makeJavaRegEx(pattern); // Adds extra \ to stop escape characters
 				userRegx = Pattern.compile(pattern); // This will throw an exception if pattern is invalid
 				done = true;
 			}
@@ -101,10 +95,9 @@ public class Regex{
 				Scanner txtFileScan = new Scanner(txtFile);
 				
 				while(txtFileScan.hasNextLine()){
-					//matches.add(txtFileScan.next(userRegx));
 					String line = txtFileScan.nextLine(); 
-					Matcher tempM = userRegx.matcher(line);		// Creates a Matcher obj that can search the input using the RegEx given by the invoking Pattern obj
-					if(tempM.find())						   //  This is where the actual traversal of the input and application of the reg ex happens. Calling it again after this line using the same Matcher results in false being returned in this case b/c this call forces it to move on. To call it again later, first reset the Matcher obj.
+					Matcher tempM = userRegx.matcher(line);		
+					if(tempM.find())			       
 						matches.add(tempM);
 				}
 				
@@ -124,30 +117,5 @@ public class Regex{
 				System.out.println("Sorry, the file " + txtFile.toString() + " couldn't be read.\n");
 			}
 		}
-
-
 	}
-
-	public static String makeJavaRegEx(String userRegx){
-		String javaRegx = userRegx;
-		for(int i = 0; i < javaRegx.length(); i++){
-			if(javaRegx.charAt(i) == '\\'){
-				javaRegx = javaRegx.substring(0,i) + "\\" + javaRegx.substring(i);		
-				i++;
-			}
-		}
-		return javaRegx;
-	}
-
 }
-
-
-/*
-	Use the DirectoryStream class to iterate over a directory
-	* DirectoryStream<Path> dirStream = Files.newDirectoryStream(path);
-
-	The File class has a lot of methods related to files and some to directories
-	Use the Path and Paths classes (from nio.files) to work with paths
-
-	There's a File class from io, and Files from nio. 
-*/
